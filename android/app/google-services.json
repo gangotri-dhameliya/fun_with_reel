@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "834624148137",
+    "project_id": "funny-reels-df6e4",
+    "storage_bucket": "funny-reels-df6e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834624148137:android:9af210d29d77e1b9a4cfb8",
+        "android_client_info": {
+          "package_name": "com.funreel.ap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1OYggtOyBNatsXXY2WRCJwrKn4dXHrnQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
