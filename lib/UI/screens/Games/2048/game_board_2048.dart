@@ -1,11 +1,7 @@
 import 'dart:math';
-import 'dart:developer' as dev;
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reels_app/UI/common/headline_body_one_base_widget.dart';
 import 'package:reels_app/UI/screens/Games/CatchTheBall/catch_the_ball.dart';
-import 'package:reels_app/infrastructure/AdHelper/banner_ad.dart';
 
 
 // class My2048Screen extends StatefulWidget {
@@ -335,13 +331,7 @@ class _My2048ScreenState extends State<My2048Screen> with AutomaticKeepAliveClie
               ),
             ),
           ),
-          if(checkGameResult() == null)
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: BannerAdView()),
-          ),
+
           if(checkGameResult() != null && checkGameResult()!)
           UserGameWiningWidget(winPoint: widget.winPoint),
           if(checkGameResult() != null && !checkGameResult()!)

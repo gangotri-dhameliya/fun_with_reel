@@ -1,8 +1,5 @@
-import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:reels_app/UI/common/common_background.dart';
@@ -12,7 +9,6 @@ import 'package:reels_app/UI/screens/CategoriesSection/SubScreen/reel_detail_vie
 import 'package:reels_app/UI/screens/CategoriesSection/catregory_controller.dart';
 import 'package:reels_app/UI/screens/CategoriesSection/widgets/category_card.dart';
 import 'package:reels_app/UI/screens/HomeSection/Widget/get_premium_dialog.dart';
-import 'package:reels_app/infrastructure/AdHelper/ad_helper.dart';
 import 'package:reels_app/infrastructure/constant/app_constant.dart';
 import 'package:reels_app/infrastructure/constant/color_constant.dart';
 import 'package:reels_app/infrastructure/constant/font_constant.dart';
@@ -192,12 +188,7 @@ class CategoriesScreen extends GetView<CategoryController> {
                                           subtitle: AppConstants.upgradeToPremiumShow.tr,
                                           showAdButton: false,
                                           onWatchAd: () {
-                                            AdHelper.createRewardedAd(
-                                                onDismissed: () {
-                                                  Get.back();
-                                                },
-                                                onUserEarnedReward: () {}
-                                            );
+
                                           },),
                                         useSafeArea: false,
                                       );

@@ -9,7 +9,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:reels_app/UI/common/common_loading_dialog.dart';
 import 'package:reels_app/UI/common/common_snackbar.dart';
-import 'package:reels_app/infrastructure/AdHelper/ad_helper.dart';
 import 'package:reels_app/infrastructure/constant/app_constant.dart';
 import 'package:reels_app/infrastructure/storage/shared_preference_service.dart';
 import 'package:reels_app/infrastructure/utils/notification_manager.dart';
@@ -65,27 +64,6 @@ class RingtoneDownloader{
 
     onDownloadComplete();
     showLoadingDialog();
-    AdHelper.createRewardedAd(
-      onDismissed: () {
-        onDownloadComplete();
-      },
-      onUserEarnedReward: () async {
-        Get.back();
-
-        bool photos = await Permission.photos.isGranted;
-        bool storage = await Permission.storage.isGranted;
-
-        if (photos || storage) {
-          showSnackbar(msg: "Downloading Ringtone...");
-          await _downloadRingtone(url);
-        } else {
-          await Permission.photos.request();
-          await Permission.storage.request();
-          showSnackbar(msg: "Downloading Ringtone...");
-          await _downloadRingtone(url);
-        }
-      },
-    );
   }
 
   static _shareRingtone(String url) async{
@@ -112,8 +90,6 @@ class RingtoneDownloader{
 
   static shareRingtone(String url) async{
     showLoadingDialog();
-    AdHelper.loadShareInterstitialAd(onDismissed: () {
-      _shareRingtone(url);
-    });
+
   }
 }

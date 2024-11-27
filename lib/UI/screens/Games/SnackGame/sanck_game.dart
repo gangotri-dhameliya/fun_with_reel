@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:reels_app/UI/common/headline_body_one_base_widget.dart';
 import 'package:reels_app/UI/screens/Games/CatchTheBall/catch_the_ball.dart';
-import 'package:reels_app/infrastructure/AdHelper/banner_ad.dart';
 
 class SnackGame extends StatefulWidget {
   void Function(int) onGameOver;
@@ -176,13 +175,7 @@ class _SnackGameState extends State<SnackGame> with TickerProviderStateMixin, Au
                 ),
               ],
             ),
-            if(!gameOver)
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: BannerAdView()),
-              ),
+
             if(gameOver && _playerScore != 0)
               UserGameWiningWidget(winPoint: _playerScore),
             if(gameOver && _playerScore == 0)

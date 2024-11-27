@@ -2,17 +2,13 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:reels_app/UI/common/headline_body_one_base_widget.dart';
 import 'package:reels_app/UI/screens/SettingSection/setting_controller.dart';
-import 'package:reels_app/infrastructure/AdHelper/ad_helper.dart';
-import 'package:reels_app/infrastructure/AdHelper/banner_ad.dart';
+
 import 'package:reels_app/infrastructure/constant/app_constant.dart';
 import 'package:reels_app/infrastructure/constant/image_constant.dart';
 import 'package:reels_app/infrastructure/storage/shared_preference_service.dart';
@@ -126,13 +122,7 @@ class _CatchTheBallScreenState extends State<CatchTheBallScreen> with AutomaticK
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
-                if(!isWinner)
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: BannerAdView()),
-                  ),
+
                 if(isWinner)
                   UserGameWiningWidget(winPoint: widget.winPoint),
 
@@ -225,24 +215,7 @@ class _UserGameWiningWidgetState extends State<UserGameWiningWidget> {
                                 isADLoading = true;
                               });
 
-                              AdHelper.createRewardedAd(
-                                  onDismissed: () {
-                                    // Get.back();
-                                    setState(() {
-                                      isADLoading = false;
-                                    });
-                                  },
-                                  onUserEarnedReward: () async {
-                                    int streakPoint = await SharedPreferenceService.getUserStreakPoint;
-                                    SharedPreferenceService.userStreakPoint(streakPoint+ widget.winPoint);
-                                    Get.find<SettingController>().strikePoint.value = streakPoint+widget.winPoint;
-                                    Get.find<SettingController>().update();
-                                    setState(() {
-                                      showRewardAd = true;
-                                      isADLoading = false;
-                                    });
-                                  },
-                              );
+
                             },
                             child: Image.asset(ImageConstant.adButton)),
                       ) : SizedBox(
@@ -267,12 +240,7 @@ class _UserGameWiningWidgetState extends State<UserGameWiningWidget> {
 
             ],
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: BannerAdView()),
-          ),
+
         ],
       ),
     );
@@ -310,12 +278,7 @@ Widget UserGameLooseWidget(){
           ],
         ),
       ),
-      Align(
-        alignment: Alignment.bottomCenter,
-        child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: BannerAdView()),
-      ),
+
     ],
   );
 

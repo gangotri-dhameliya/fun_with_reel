@@ -8,7 +8,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:reels_app/UI/common/common_loading_dialog.dart';
 import 'package:reels_app/UI/common/common_snackbar.dart';
-import 'package:reels_app/infrastructure/AdHelper/ad_helper.dart';
 import 'package:reels_app/infrastructure/constant/app_constant.dart';
 import 'package:reels_app/infrastructure/storage/shared_preference_service.dart';
 import 'package:reels_app/infrastructure/utils/notification_manager.dart';
@@ -77,28 +76,7 @@ class ImageDownloader{
     showLoadingDialog();
     ///TODO: enable for downloads google ads
     // if(showRewardAd ?? false){
-      AdHelper.createRewardedAd(
-        onDismissed: () {},
-        onUserEarnedReward: () async {
-          Get.back();
-          bool photos = await Permission.photos.isGranted;
-          bool storage = await Permission.storage.isGranted;
-          premiumCount++;
-          if (photos || storage) {
-            showSnackbar(msg: "Downloading Wallpaper...");
-            await _downloadImage(imageUrl);
-            await SharedPreferenceService.savePremiumWallpaperLimit(premiumCount.toString());
-            log(await SharedPreferenceService.getPremiumWallpaperLimit);
-          } else {
-            await Permission.photos.request();
-            await Permission.storage.request();
-            showSnackbar(msg: "Downloading Wallpaper...");
-            await _downloadImage(imageUrl);
-            await SharedPreferenceService.savePremiumWallpaperLimit(premiumCount.toString());
-            log(await SharedPreferenceService.getPremiumWallpaperLimit);
-          }
-        },
-      );
+
     // } else{
     //   AdHelper.createInterstitialAd(onDismissed: () async{
     //     Get.back();
@@ -141,9 +119,7 @@ class ImageDownloader{
 
   static shareImage(String imageUrl) async{
     showLoadingDialog();
-    AdHelper.loadShareInterstitialAd(onDismissed: () {
-      _shareImage(imageUrl);
-    });
+
   }
 
 

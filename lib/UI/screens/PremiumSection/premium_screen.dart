@@ -4,10 +4,9 @@ import 'package:get/get.dart';
 import 'package:reels_app/UI/common/common_background.dart';
 import 'package:reels_app/UI/common/common_loader.dart';
 import 'package:reels_app/UI/common/headline_body_one_base_widget.dart';
-import 'package:reels_app/UI/screens/CategoriesSection/SubScreen/reel_detail_view.dart';
 import 'package:reels_app/UI/screens/CategoriesSection/widgets/category_card.dart';
 import 'package:reels_app/UI/screens/PremiumSection/premium_controller.dart';
-import 'package:reels_app/infrastructure/AdHelper/ad_helper.dart';
+
 import 'package:reels_app/infrastructure/constant/app_constant.dart';
 import 'package:reels_app/infrastructure/constant/color_constant.dart';
 import 'package:reels_app/infrastructure/constant/font_constant.dart';
@@ -70,12 +69,7 @@ class PremiumScreen extends GetView<PremiumController> {
                                               subtitle: AppConstants.upgradeToPremiumShow.tr,
                                               showAdButton: false,
                                               onWatchAd: () {
-                                                AdHelper.createRewardedAd(
-                                                  onDismissed: () {
-                                                    Get.back();
-                                                  },
-                                                  onUserEarnedReward: () {}
-                                                );
+
                                               },),
                                             useSafeArea: false,
                                             barrierDismissible: true

@@ -8,7 +8,6 @@ import 'package:reels_app/UI/screens/Games/CatchTheBall/catch_the_ball.dart';
 import 'package:reels_app/UI/screens/Games/SnackGame/sanck_game.dart';
 import 'package:reels_app/UI/screens/Games/TicTacToe/tic_tac_toe.dart';
 import 'package:reels_app/UI/screens/SettingSection/setting_controller.dart';
-import 'package:reels_app/infrastructure/AdHelper/native_ad.dart';
 import 'package:reels_app/infrastructure/model/reels_data_model.dart';
 import 'package:reels_app/infrastructure/package/card_swiper/src/swiper.dart';
 import 'package:reels_app/infrastructure/package/card_swiper/src/swiper_controller.dart';
@@ -156,9 +155,7 @@ class _ReelsViewerState extends State<ReelsViewer> {
           Swiper(
             itemBuilder: (BuildContext context, int index) {
 
-              if (widget.reelsList[index].ads==true){
-                return NativeAdView();
-              }else if(widget.reelsList[index].games==true ){
+             if(widget.reelsList[index].games==true ){
                 if(gamesList.length > index~/7){
 
                   return gamesList[index~/7];

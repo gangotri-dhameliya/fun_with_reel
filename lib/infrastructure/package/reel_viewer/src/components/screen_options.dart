@@ -1,24 +1,14 @@
-import 'dart:developer';
-import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:reels_app/UI/screens/CategoriesSection/catregory_controller.dart';
 import 'package:reels_app/UI/screens/FavouriteSection/favourite_controller.dart';
 import 'package:reels_app/UI/screens/HomeSection/Widget/get_premium_dialog.dart';
 import 'package:reels_app/UI/screens/MainSection/main_screen_controller.dart';
-import 'package:reels_app/UI/screens/MainSection/widgets/bottom_bar_widget.dart';
-import 'package:reels_app/infrastructure/AdHelper/ad_helper.dart';
 import 'package:reels_app/infrastructure/constant/app_constant.dart';
 import 'package:reels_app/infrastructure/constant/color_constant.dart';
-import 'package:reels_app/infrastructure/constant/toast.dart';
 import 'package:reels_app/infrastructure/model/reels_data_model.dart';
 import 'package:reels_app/infrastructure/storage/shared_preference_service.dart';
-import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
-import 'package:reels_app/infrastructure/utils/notification_manager.dart';
-import 'package:share_plus/share_plus.dart';
 
 
 class ScreenOptions extends StatefulWidget {
@@ -171,42 +161,7 @@ class _ScreenOptionsState extends State<ScreenOptions> {
                                               setState(() {
                                                 videoSharingProgress = true;
                                               });
-                                              AdHelper.createRewardedAd(
-                                                onDismissed: () {
-                                                  Get.back();
-                                                  setState(() {
-                                                    videoSharingProgress = false;
-                                                  });
-                                                },
-                                                onUserEarnedReward: () async {
-                                                  try {
-                                                    var response = await http.get(Uri.parse(widget.item.videoUrl!));
-                                                    final dir = Platform.isAndroid ? await getApplicationDocumentsDirectory() : await getApplicationSupportDirectory();
 
-                                                    var filePath = '${dir.path}/ReelApp';
-                                                    var fileName = '${DateTime.now().millisecondsSinceEpoch}.mp4';
-
-                                                    File reelsPath = File("$filePath/$fileName");
-
-                                                    if (await Directory(filePath).exists()) {
-                                                      await reelsPath.writeAsBytes(response.bodyBytes);
-                                                    } else {
-                                                      await Directory(filePath).create(recursive: true);
-                                                      await reelsPath.writeAsBytes(response.bodyBytes);
-                                                    }
-                                                    Share.shareFiles([reelsPath.path] ,subject: AppConstants.shareAppTxt);
-                                                    setState(() {
-                                                      videoSharingProgress = false;
-                                                    });
-                                                  } on Exception catch (e) {
-                                                    // TODO
-                                                    log("Video Sharing error ===> $e");
-                                                    setState(() {
-                                                      videoSharingProgress = false;
-                                                    });
-                                                  }
-                                                },
-                                              );
                                             },),
                                           useSafeArea: false,
                                           barrierDismissible: false
@@ -252,74 +207,7 @@ class _ScreenOptionsState extends State<ScreenOptions> {
                                               setState(() {
                                                 videoDownloadProgress = true;
                                               });
-                                              AdHelper.createRewardedAd(
-                                                onDismissed: () {
-                                                  Get.back();
-                                                  setState(() {
-                                                    videoSharingProgress = false;
-                                                  });
-                                                },
-                                                onUserEarnedReward: () async {
-                                                  String _downloadMessage = '';
 
-                                                  Get.back();
-                                                  try {
-                                                    var response = await http.get(Uri.parse(widget.item.videoUrl!));
-                                                    final dir = Platform.isAndroid ? await getApplicationDocumentsDirectory() : await getApplicationSupportDirectory();
-
-                                                    var filePath = '${dir!.path}/Reel App';
-                                                    var fileName = '${DateTime.now().millisecondsSinceEpoch}.mp4';
-
-                                                    File reelsPath = File("$filePath/$fileName");
-                                                    File androidPath = File("/storage/emulated/0/Pictures/$fileName");
-
-                                                    if (await Directory(filePath).exists()) {
-                                                      await reelsPath.writeAsBytes(response.bodyBytes);
-                                                    } else {
-                                                      await Directory(filePath).create(recursive: true);
-                                                      await reelsPath.writeAsBytes(response.bodyBytes);
-
-                                                    }
-                                                    /// TODO: uncomment this lines if image gallery added in pubspect
-                                                    await ImageGallerySaver.saveFile(
-                                                      reelsPath.path,
-                                                      // quality: 100,
-                                                      name: fileName,
-                                                    );
-                                                    // if(Platform.isAndroid){
-                                                    //   debugPrint("----------android downloading");
-                                                    //   try {
-                                                    //     methodChannel.invokeMethod('downloadWallpaper', {
-                                                    //       "imageUrl": widget.item.videoUrl!,
-                                                    //       "fileName": "${DateTime.now().millisecondsSinceEpoch}-${widget.item.videoUrl!.split("/").last}"
-                                                    //     });
-                                                    //   } on PlatformException catch (e) {
-                                                    //     Exception("Failed to Invoke: '${e.message}'.");
-                                                    //   }
-                                                    // }
-                                                    if(await SharedPreferenceService.getShowNotification){
-                                                      NotificationManager.showCompletedNotification(category: "Reel",filePath: Platform.isAndroid ? reelsPath.path : reelsPath.path);
-                                                      log("Download Successfully complete $reelsPath");
-                                                    }else{
-                                                      showTopToast(msg: AppConstants.videoDownload.tr);
-                                                    }
-                                                    setState(() {
-                                                      videoDownloadProgress = false;
-                                                    });
-                                                  } catch (e) {
-                                                    setState(() {
-                                                      _downloadMessage = 'Error downloading video: $e';
-                                                    });
-                                                    log("Download reels error ===> ${_downloadMessage}");
-                                                    showTopToast(msg: _downloadMessage);
-                                                    setState(() {
-                                                      videoDownloadProgress = false;
-                                                    });
-
-                                                  }
-
-                                                },
-                                              );
                                             },),
                                           useSafeArea: false,
                                           barrierDismissible: false
